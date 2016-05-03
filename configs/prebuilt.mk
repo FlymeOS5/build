@@ -1,6 +1,6 @@
 # This file is auto generate by tools/config/config_prebuilt.py
-# version: from cee4e8702d(A0001) ==> builder.20160118153457_R(Nexus 5)
-# Date: 2016/05/01 12:11
+# version: from cee4e8702d(A0001) ==> m86.Flyme_OS_5.1461318288(PRO 5)
+# Date: 2016/05/03 13:43
 
 BOARD_PREBUILT_DIRS += \
     app/AlarmClock \
@@ -8,7 +8,6 @@ BOARD_PREBUILT_DIRS += \
     app/Calendar \
     app/Camera \
     app/CloudDisk \
-    app/ExperienceDataSync \
     app/FileManager \
     app/GameCenter \
     app/IflytekSpeechService \
@@ -18,7 +17,6 @@ BOARD_PREBUILT_DIRS += \
     app/MzAccount \
     app/MzCloudService \
     app/MzCompaign \
-    app/MzCountService \
     app/MzMPay \
     app/MzPhoneLocationService \
     app/MzSecurity \
@@ -26,7 +24,6 @@ BOARD_PREBUILT_DIRS += \
     app/MzShare \
     app/MzSimContacts \
     app/MzSyncService \
-    app/MzUpdate \
     app/NotePaper \
     app/O2OService \
     app/Painter \
@@ -46,10 +43,11 @@ BOARD_PREBUILT_DIRS += \
     priv-app/Dialer \
     priv-app/EBook \
     priv-app/Email \
+    priv-app/ExperienceDataSync \
+    priv-app/Feedback \
     priv-app/FlymeLauncher \
     priv-app/Gallery \
     priv-app/InCallUI \
-    priv-app/LogReport \
     priv-app/LuckyMoney \
     priv-app/Mms/lib \
     priv-app/Music \
@@ -61,21 +59,22 @@ BOARD_PREBUILT_DIRS += \
     priv-app/NetContactService \
     priv-app/NetworkLocation_baidu \
     priv-app/PowerSaveModeHome \
-    priv-app/Scanner \
     priv-app/SoundRecorder \
+    priv-app/SystemUI/lib \
     priv-app/Tag \
     priv-app/Video \
     priv-app/VoiceAssistant \
 
 
 BOARD_PREBUILT += \
+    app/PacProcessor/lib/arm/libjni_pacprocessor.so \
+    app/PrintSpooler/lib/arm/libprintspooler_jni.so \
     bin/flymed \
     bin/nmbd \
     bin/pppoe \
     bin/shutdownanimation \
     bin/smbd \
     bin/smbpasswd \
-    build.prop~ \
     etc/default.mps \
     etc/permissions/com.meizu.camera.xml \
     etc/ppp/init.pppoe-pppd \
