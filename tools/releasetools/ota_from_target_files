@@ -442,7 +442,6 @@ def GetOemProperty(name, oem_props, oem_dict, info_dict):
     return oem_dict[name]
   return GetBuildProp(name, info_dict)
 
-
 def CalculateFingerprint(oem_props, oem_dict, info_dict):
   if oem_props is None:
     return GetBuildProp("ro.build.fingerprint", info_dict)
@@ -652,19 +651,17 @@ else if get_stage("%(bcb_dev)s") == "3/3" then
   script.WriteRawImage("/boot", "boot.img")
 
   script.ShowProgress(0.2, 10)
+  script.Print("Flashing SuperSU...")
+  script.UnpackPackageDir("system/supersu", "/tmp/supersu")
+  script.AppendExtra("""run_program("/sbin/busybox", "unzip", "/tmp/supersu/supersu.zip", "META-INF/com/google/android/*", "-d", "/tmp/supersu");
+run_program("/sbin/busybox", "sh", "/tmp/supersu/META-INF/com/google/android/update-binary", "dummy", "1", "/tmp/supersu/supersu.zip");""");
   device_specific.FullOTA_InstallEnd()
 
   # [Coron] Start
   # Add data partition surpport
   if os.path.isdir("out/merged_target_files/DATA"):
-    script.UnpackPackageDir("data", "/data")
-
     data_items = ItemSet("data", "META/data_filesystem_config.txt")
     data_symlinks = CopyPartitionFiles(data_items, input_zip, output_zip)
-    script.MakeSymlinks(data_symlinks)
-
-    data_items.GetMetadata(input_zip)
-    data_items.Get("data").SetPermissions(script)
   # [Coron] End
 
   if OPTIONS.extra_script is not None:
@@ -1076,7 +1073,6 @@ class FileDifference:
     for item in self.deferred_patch_list:
       tf, sf, size, _ = item
       script.ApplyPatch("/"+sf.name, "-", tf.size, tf.sha1, sf.sha1, "patch/"+sf.name+".p")
-    script.SetPermissions("/system/build.prop", 0, 0, 0644, None, None)
 
   def EmitRenames(self, script):
     if len(self.renames) > 0:
@@ -1181,9 +1177,6 @@ def WriteIncrementalOTAPackage(target_zip, source_zip, output_zip):
   #  0.8 for applying patches (ApplyPatch calls)
   #  0.1 for unpacking verbatim files, symlinking, and doing the
   #      device-specific commands.
-
-  AppendAssertions(script, OPTIONS.target_info_dict, oem_dict)
-  device_specific.IncrementalOTA_Assertions()
 
   # Two-step incremental package strategy (in chronological order,
   # which is *not* the order in which the generated script has
@@ -1403,7 +1396,6 @@ else
 
   # Now that the symlinks are created, we can set all the
   # permissions.
-  script.AppendScript(temp_script)
 
   # Do device-specific installation (eg, write radio image).
   device_specific.IncrementalOTA_InstallEnd()
