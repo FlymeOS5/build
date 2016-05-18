@@ -8,6 +8,7 @@
 #############################################################################################################
 
 PRJ_ROOT=`pwd`
+USER=`whoami`
 ADB="adb"
 
 CHECK_SU=$PORT_ROOT/tools/check-su
@@ -309,7 +310,7 @@ function buildSystemDir {
 	    find $SYSTEM_DIR -name invoke-as | xargs rm -f
 	    dealwithSystemPullLog $OUT_DIR/system-pull.log
 	else
-	    sudo chown -R nian:nian system
+	    sudo chown -R $USER:$USER system
 	    mkdir -p $SYSTEM_DIR
             rm -rf $SYSTEM_DIR/*
             cp -rf system/* $SYSTEM_DIR
