@@ -235,6 +235,10 @@ define port_custom_app
 if [ -f $(PORT_CUSTOM_APP) ]; then $(PORT_CUSTOM_APP) $(1) $(2); fi
 endef
 
+define base_custom_app
+if [ -f $(BASE_CUSTOM_APP) ]; then $(BASE_CUSTOM_APP) $(1) $(2); fi
+endef
+
 # update the framework.jar.out/smali/com/android/internal/R*.smali
 define update_internal_resource
 echo ">>> use $(1) to update internal resources in $(2)"; \
@@ -334,6 +338,7 @@ $(OUT_OBJ_SYSTEM)/$(2): $(BOARD_SYSTEM)/$(2) $(MERGE_UPDATE_TXT) $(PREPARE_FRW_R
 	$(hide) if [ x"$$(needUpdateRes)" != x"" ];then \
 			$(call modify_res_id,$$(tempSmaliDir)); \
 		fi;
+	$(hide) $(call base_custom_app,$$(apkBaseName),$$(tempSmaliDir));
 	$(hide) $(call port_custom_app,$$(apkBaseName),$$(tempSmaliDir));
 	$(hide) $(call part_smali_append,$(1)/smali,$$(tempSmaliDir)/smali);
 	$(hide) $(call update_apktool_yml,$$(tempSmaliDir)/apktool.yml,$(APKTOOL_BOARD_TAG));
@@ -371,6 +376,7 @@ $(call copy_package,$$(boardSmaliDir),$$(tempSmaliDir))
 $(eval board_prebuilt_package:=)
 $(eval board_prebuilt_from:=)
 	$(hide) $(call dir_copy,$(1),$$(tempSmaliDir))
+	$(hide) $(call base_custom_app,$$(apkBaseName),$$(tempSmaliDir));
 	$(hide) $(call port_custom_app,$$(apkBaseName),$$(tempSmaliDir));
 	$(hide) $(call part_smali_append,--onlypart,$(1)/smali,$$(tempSmaliDir)/smali);
 	$(hide) $(call custom_app,$$(apkBaseName),$$(tempSmaliDir));
@@ -409,6 +415,7 @@ $(OUT_OBJ_SYSTEM)/$(2): $(IF_VENDOR_RES) $(fk_sources) $(fk_ol_sources)
 	$(hide) rm -rf $$(tempSmaliDir)
 	$(hide) mkdir -p $(OUT_OBJ_FRAMEWORK)
 	$(hide) $(call dir_copy,$(1),$$(tempSmaliDir))
+	$(hide) $(call base_custom_app,$$(apkBaseName),$$(tempSmaliDir));
 	$(hide) $(call port_custom_app,$$(apkBaseName),$$(tempSmaliDir));
 	$(hide) $(call custom_app,$$(apkBaseName),$$(tempSmaliDir));
 	$(hide) $(call update_apktool_yml,$$(tempSmaliDir)/apktool.yml,$(APKTOOL_VENDOR_TAG));
@@ -504,6 +511,7 @@ $(OUT_OBJ_SYSTEM)/$(1): $(AAPT_BUILD_TARGET) $(MERGE_UPDATE_TXT) $(IF_ALL_RES) $
 	$(hide) rm -rf "$$(tempSmaliDir)"
 	$(hide) mkdir -p "$$(tempSmaliDir)"
 	$(hide) $(APKTOOL) d -f -t $(APKTOOL_BOARD_TAG) $(AAPT_BUILD_TARGET) -o $$(tempSmaliDir) 2>/dev/null;
+	$(hide) $(call base_custom_app,$$(apkBaseName),$$(tempSmaliDir));
 	$(hide) $(call port_custom_app,$$(apkBaseName),$$(tempSmaliDir));
 	$(hide) $(call custom_app,$$(apkBaseName),$$(tempSmaliDir))
 	$(hide) $(call modify_res_id,$$(tempSmaliDir))

@@ -5,6 +5,7 @@
 
 # set PRJ_ROOT to PWD
 PRJ_ROOT := $(PWD)
+BASE_ROOT := $(PWD)/../$(BASE)
 
 # if doesn't set PRJ_NAME, set by PRJ_ROOT
 ifeq ($(strip $(PRJ_NAME)),)
@@ -374,3 +375,10 @@ PRJ_CUSTOM_APP         := $(PRJ_ROOT)/custom_app.sh
 PRJ_CUSTOM_JAR         := $(PRJ_ROOT)/custom_jar.sh
 PRJ_CUSTOM_BUILDPROP   := $(PRJ_ROOT)/custom_buildprop.sh
 PRJ_CUSTOM_SCRIPT      := $(PRJ_ROOT)/custom_updater_script.sh
+
+################### tools for base ####################
+BASE_CUSTOM_TARGETFILES := $(BASE_ROOT)/custom_targetfiles.sh
+BASE_CUSTOM_APP         := $(BASE_ROOT)/custom_app.sh
+BASE_CUSTOM_JAR         := $(BASE_ROOT)/custom_jar.sh
+BASE_CUSTOM_BUILDPROP   := $(BASE_ROOT)/custom_buildprop.sh
+BASE_CUSTOM_SCRIPT      := $(BASE_ROOT)/custom_updater_script.sh
