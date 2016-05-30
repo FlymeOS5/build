@@ -33,4 +33,5 @@ BOARD_PREBUILT += \
     lib64/libdce-1.1.5-mfr.so \
     lib64/libjni_glrenderer.so \
     lib64/libTmsdk-2.0.8-mfr.so \
-    lib64/libtaglib.so
+    lib64/libtaglib.so 
+
