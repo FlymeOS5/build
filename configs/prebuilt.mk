@@ -8,6 +8,7 @@ BOARD_PREBUILT_DIRS += \
     app/Calendar \
     app/Camera \
     app/CloudDisk \
+    app/DesktopBackup \
     app/ExperienceDataSync \
     app/FileManager \
     app/GameCenter \
